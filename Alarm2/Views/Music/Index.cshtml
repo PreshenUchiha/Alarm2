@@ -1,0 +1,46 @@
+﻿
+@*@{
+    ViewData["Title"] = "Music Player";
+}
+
+<h2>Music Player</h2>
+
+<input type="text" id="inputValue" />
+<button onclick="playMusic()">Play</button>
+<button onclick="stopMusic()">Stop</button>
+
+<p id="errorMessage" style="color: red; display: none;"></p>
+
+<script>
+    function playMusic() {
+        var inputValue = document.getElementById("inputValue").value;
+        if (inputValue === "1") {
+            location.href = '@Url.Action("Play", "Music")';
+        } else {
+            document.getElementById("errorMessage").innerText = "Please enter 1 to play the sound.";
+            document.getElementById("errorMessage").style.display = "block";
+        }
+    }
+
+    function stopMusic() {
+        location.href = '@Url.Action("Stop", "Music")';
+    }
+</script>*@
+@{
+    ViewData["Title"] = "Music Player";
+}
+
+<h2>Music Player</h2>
+
+@using (Html.BeginForm("Play", "Music", FormMethod.Post))
+{
+    <input type="text" name="inputValue" />
+    <button type="submit" class="">Play</button>
+}
+
+<button onclick="location.href='@Url.Action("Stop", "Music")'">Stop</button>
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <p style="color: red;">@ViewBag.ErrorMessage</p>
+}
